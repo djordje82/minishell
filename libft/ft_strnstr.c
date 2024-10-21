@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jadyar <jadyar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dodordev <dodordev@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/16 11:35:51 by jadyar            #+#    #+#             */
-/*   Updated: 2023/11/22 13:02:31 by jadyar           ###   ########.fr       */
+/*   Created: 2023/11/21 13:44:16 by dodordev          #+#    #+#             */
+/*   Updated: 2023/11/22 15:30:18 by dodordev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,50 +15,22 @@
 char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
 	size_t	i;
-	char	*bptr;
-	char	*lptr;
+	size_t	j;
 
+	i = 0;
+	j = 0;
 	if (!*little)
 		return ((char *)big);
-	while (len-- && *big)
+	while (big[i] && i < len)
 	{
-		if (*big == *little)
+		while (big[i + j] == little[j] && big[i + j] && i + j < len)
 		{
-			i = len;
-			bptr = ((char *)big + 1);
-			lptr = ((char *)little + 1);
-			while (i-- && *bptr && *lptr && *lptr == *bptr)
-			{
-				++lptr;
-				++bptr;
-			}
-			if (*lptr == '\0')
-				return ((char *)big);
+			j++;
+			if (little[j] == 0)
+				return ((char *)big + i);
 		}
-		++big;
-	}
-	return (NULL);
-}
-
-/* #include <stdio.h>
-#include <string.h>
-
-int	main(void)
-{
-	char *big = "Hello, world!";
-	char *little = "man world";
-	size_t len = 10;
-
-	char *result = ft_strnstr(big, little, len);
-	if (result)
-	{
-		printf("The substring '%s' was found at index %ld in the string '%s'\n",
-			little, result - big, big);
-	}
-	else
-	{
-		printf("The substring '%s' was not found in the string '%s'\n", little,
-			big);
+		i++;
+		j = 0;
 	}
 	return (0);
-} */
+}

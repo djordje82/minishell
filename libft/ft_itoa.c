@@ -3,54 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jadyar <jadyar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dodordev <dodordev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/21 20:04:06 by jadyar            #+#    #+#             */
-/*   Updated: 2023/11/22 10:08:22 by jadyar           ###   ########.fr       */
+/*   Created: 2023/11/24 15:05:11 by dodordev          #+#    #+#             */
+/*   Updated: 2023/11/24 15:55:41 by dodordev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	get_number_length(int n)
+static size_t	numlen(int n)
 {
-	int	i;
+	size_t	len;
 
-	if (n == 0)
-		return (1);
-	i = 0;
-	if (n < 0)
-		i++;
-	while (n != 0)
+	len = 0;
+	if (n <= 0)
+		len++;
+	while (n)
 	{
 		n /= 10;
-		i++;
+		len++;
 	}
-	return (i);
+	return (len);
 }
 
 char	*ft_itoa(int n)
 {
-	int		nlen;
-	char	*arr;
-	long	nbr;
+	char	*a;
+	size_t	len;
+	long	nb;
 
-	nbr = n;
-	nlen = get_number_length(nbr);
-	arr = malloc(nlen + 1);
-	if (!arr)
-		return (0);
-	arr[nlen--] = '\0';
-	if (nbr < 0)
+	nb = n;
+	len = numlen(n);
+	a = malloc(sizeof(char) * (len + 1));
+	if (a == 0)
+		return (NULL);
+	if (nb < 0)
 	{
-		nbr = -nbr;
-		arr[0] = '-';
+		a[0] = '-';
+		nb = -nb;
 	}
-	while (nbr >= 10)
+	a[len--] = '\0';
+	if (nb == 0)
+		a[0] = '0';
+	while (nb)
 	{
-		arr[nlen--] = nbr % 10 + '0';
-		nbr /= 10;
+		a[len--] = nb % 10 + '0';
+		nb /= 10;
 	}
-	arr[nlen--] = nbr % 10 + '0';
-	return (arr);
+	return (a);
 }

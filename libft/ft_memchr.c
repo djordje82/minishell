@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jadyar <jadyar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ddordevi <ddordevi@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/15 15:01:01 by jadyar            #+#    #+#             */
-/*   Updated: 2023/11/21 16:50:25 by jadyar           ###   ########.fr       */
+/*   Created: 2023/11/15 11:53:20 by dodordev          #+#    #+#             */
+/*   Updated: 2023/11/21 16:56:35 by dodordev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,5 @@ void	*ft_memchr(const void *s, int c, size_t n)
 			return ((void *)(ptr + i));
 		i++;
 	}
-	return (NULL);
+	return (0);
 }

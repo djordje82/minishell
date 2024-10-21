@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lst_last.c                                      :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dodordev <dodordev@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: dodordev <dodordev@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/22 18:18:42 by jadyar            #+#    #+#             */
-/*   Updated: 2024/02/19 15:03:14 by dodordev         ###   ########.fr       */
+/*   Created: 2023/11/27 14:07:01 by dodordev          #+#    #+#             */
+/*   Updated: 2023/11/27 16:44:37 by dodordev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 
 t_list	*ft_lstlast(t_list *lst)
 {
-	t_list	*last;
+	t_list	*tmp;
 
-	last = lst;
-	while (lst)
-	{
-		last = lst;
-		lst = lst->next;
-	}
-	return (last);
+	if (!lst)
+		return (0);
+	tmp = lst;
+	while (tmp->next)
+		tmp = tmp->next;
+	return (tmp);
 }
