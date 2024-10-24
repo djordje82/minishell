@@ -6,7 +6,7 @@
 /*   By: dodordev <dodordev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 11:45:14 by dodordev          #+#    #+#             */
-/*   Updated: 2024/10/17 17:58:05 by dodordev         ###   ########.fr       */
+/*   Updated: 2024/10/21 16:55:28 by dodordev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <sys/wait.h>
 # include <sys/types.h>
 # include <sys/stat.h>
-# include "../libft/libft.h"
+# include "../libft/inc/libft.h"
 # include <fcntl.h>
 # include <errno.h>
 
@@ -71,7 +71,7 @@ typedef struct s_shell
 
 /*BUILTINS*/
 int		ft_cd(char **args, t_shell *shell);
-void	ft_pwd(void);
+int		ft_pwd(void);
 void	ft_echo(char **args);
 void	ft_export(char **args);
 void	ft_unset(char **args);

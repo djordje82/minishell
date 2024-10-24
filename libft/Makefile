@@ -1,73 +1,161 @@
-NAME = libft.a
-SRC = ft_isalpha.c \
-		ft_isdigit.c \
-		ft_isalnum.c \
-		ft_isascii.c \
-		ft_isprint.c \
-		ft_strlen.c \
-		ft_memset.c \
-		ft_bzero.c \
-		ft_memcpy.c \
-		ft_memmove.c \
-		ft_strlcpy.c \
-		ft_strlcat.c \
-		ft_toupper.c \
-		ft_tolower.c \
-		ft_strchr.c \
-		ft_strrchr.c \
-		ft_strncmp.c \
-		ft_memchr.c \
-		ft_memcmp.c \
-		ft_strnstr.c \
-		ft_atoi.c \
-		ft_calloc.c \
-		ft_strdup.c \
-		ft_substr.c \
-		ft_strjoin.c \
-		ft_strtrim.c \
-		ft_split.c \
-		ft_itoa.c \
-		ft_strmapi.c \
-		ft_striteri.c \
-		ft_putchar_fd.c \
-		ft_putstr_fd.c \
-		ft_putendl_fd.c \
-		ft_putnbr_fd.c
-BONUS_SRC = ft_lstnew.c \
-		ft_lstadd_front.c \
-		ft_lstsize.c \
-		ft_lstlast.c \
-		ft_lstadd_back.c \
-		ft_lstdelone.c \
-		ft_lstclear.c \
-		ft_lstiter.c \
-		ft_lstmap.c
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: dodordev <dodordev@student.42berlin.de>    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/07/30 12:10:30 by dodordev          #+#    #+#              #
+#    Updated: 2024/10/21 12:53:53 by dodordev         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-OBJ = $(SRC:%.c=%.o)
-BONUS_OBJ = $(BONUS_SRC:.c=.o)
-CFLAGS = -Wall -Werror -Wextra
+NAME = libft.a
+
+LIBFT = Libft/libft.a
+
 CC = cc
+
+CCFLAGS = -Wall -Wextra -Werror
+
+ARNAME = ar crs $(NAME)
+
+INCLUDES = -I inc
+
 RM = rm -f
 
-all: $(NAME)
+MKDIR_P = mkdir -p
 
-$(NAME): $(OBJ)
-	$(CC) $(CFLAGS) -c $(SRC)
-	ar rc $(NAME) $(OBJ)
-	ranlib $(NAME)
+COMPILATION_FLAG_FILE=.compilation_started
 
-bonus: $(OBJ) $(BONUS_OBJ)
-		@ar rcs $(NAME) $(OBJ) $(BONUS_OBJ)
-		@ranlib $(NAME)
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+#                                    LIBFT                                     #
+
+SRC_DIR = src/
+
+OBJS_DIR = objs/
+
+LIBFT_FILES = isalpha isdigit isalnum \
+		isascii isprint atoi \
+		bzero calloc itoa \
+		memchr memcmp memcpy \
+		memmove memset \
+		putchar_fd putendl_fd putnbr_fd \
+		putstr_fd split strchr \
+		strdup striteri strjoin \
+		strlcat strlcpy strlen \
+		strmapi strncmp strnstr \
+		strrchr strtrim substr \
+		tolower toupper\
+		lstnew lstadd_front lstsize \
+		lstlast lstadd_back lstdelone \
+		lstclear lstiter lstmap \
+
+SRC = $(addprefix $(SRC_DIR)ft_, $(addsuffix .c, $(LIBFT_FILES)))
+
+OBJS := $(addprefix $(OBJS_DIR)ft_, $(addsuffix .o, $(LIBFT_FILES)))
+
+#                                    PRINTF                                    #
+
+PRINTF_SRC_DIR = $(SRC_DIR)printf
+
+PRINTF_OBJS_DIR = $(OBJS_DIR)printf/
+
+PRINTF_FILES = ft_printf ft_print_c ft_print_d \
+		ft_print_p ft_print_s ft_print_u ft_print_x
+
+PRINTF_SRC = $(addprefix $(PRINTF_SRC_DIR)/, $(addsuffix .c, $(PRINTF_FILES)))
+
+PRINTF_OBJS := $(addprefix $(PRINTF_OBJS_DIR)/, $(addsuffix .o, $(PRINTF_FILES)))
+
+#                                       GNL                                    #
+
+GNL_SRC_DIR = $(SRC_DIR)gnl
+
+GNL_OBJS_DIR = $(OBJS_DIR)gnl/
+
+GNL_FILES = get_next_line get_next_line_utils
+
+GNL_SRC = $(addprefix $(GNL_SRC_DIR), $(addsuffix .c, $(GNL_FILES)))
+
+GNL_OBJS := $(addprefix $(GNL_OBJS_DIR), $(addsuffix .o, $(GNL_FILES)))
+
+# **************************************************************************** #
+#                                 LIBFT RULES                                  #
+# **************************************************************************** #
+
+all: libft_std printf gnl
+
+libft_std: $(NAME)
+
+$(NAME): directories $(OBJS)
+	$(call print_status,"Creating library $(NAME)...")
+	@$(ARNAME) $(OBJS) > /dev/null
+	@echo "${CHECK} Library $(NAME) created"
+	@$(RM) $(COMPILATION_FLAG_FILE)
+
+$(OBJS_DIR)%.o: $(SRC_DIR)%.c
+	@if [ ! -f $(COMPILATION_FLAG_FILE) ]; then \
+		echo "${PINK}====> Compiling library${NC}"; \
+		touch $(COMPILATION_FLAG_FILE); \
+	fi
+	@$(CC) $(INCLUDES) $(CCFLAGS) -c $< -o $@ > /dev/null
+	@echo "${CHECK} Compiled $<"
+
+$(OBJS_DIR):
+	@$(MKDIR_P) $(OBJS_DIR)
+
+# **************************************************************************** #
+#                                PRINTF RULES                                  #
+# **************************************************************************** #
+
+printf: $(NAME) $(PRINTF_OBJS)
+	$(call print_status,"Adding Printf to $(NAME)...")
+	@$(ARNAME) $(PRINTF_OBJS) > /dev/null
+	@echo "${CHECK} Library $(NAME) created"
+	@$(RM) $(COMPILATION_FLAG_FILE)
+
+$(PRINTF_OBJS_DIR): $(OBJS_DIR)
+	@$(MKDIR_P) $(PRINTF_OBJS_DIR)
+
+
+$(PRINTF_OBJS_DIR)%.o: $(PRINTF_SRC_DIR)%.c
+	@$(CC) $(INCLUDES) $(CCFLAGS) -c $< -o $@ > /dev/null
+	@echo "${CHECK} Compiled $<"
+
+# **************************************************************************** #
+#                                  GNL RULES                                   #
+# **************************************************************************** #
+
+gnl: $(NAME) $(GNL_OBJS)
+	$(call print_status,"Adding GNL to $(NAME)...")
+	@$(ARNAME) $(GNL_OBJS) > /dev/null
+	@echo "${CHECK} Library $(NAME) created"
+	@$(RM) $(COMPILATION_FLAG_FILE)
+
+$(GNL_OBJS_DIR): $(OBJS_DIR)
+	@$(MKDIR_P) $(GNL_OBJS_DIR)
+
+$(GNL_OBJS_DIR)%.o: $(GNL_SRC_DIR)%.c
+	@$(CC) $(INCLUDES) $(CCFLAGS) -c $< -o $@ > /dev/null
+	@echo "${CHECK} Compiled $<"
+
+# **************************************************************************** #
+#                                    RULES                                     #
+# **************************************************************************** #
+
+directories: $(OBJS_DIR) $(GNL_OBJS_DIR) $(PRINTF_OBJS_DIR)
 
 clean:
-	$(RM) $(OBJ) $(BONUS_OBJ)
+	$(call print_status,"Cleaning up object files...")
+	@$(RM) $(OBJS) $(OBJS_PRINTF) $(OBJS_GNL) $(COMPILATION_FLAG_FILE)
+	@rm -rf $(OBJS_DIR)
+	@echo "${CHECK} Cleanup complete"
 
 fclean: clean
-	$(RM) $(NAME)
+	$(call print_status,"Full clean - Removing library...")
+	@$(RM) $(NAME)
+	@echo "${CHECK} Full cleanup complete"
 
 re: fclean all
 
-.PHONY: all clean fclean re bonus
+.PHONY: all printf gnl libft_std directories clean fclean re
