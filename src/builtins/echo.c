@@ -6,13 +6,13 @@
 /*   By: dodordev <dodordev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 11:52:07 by dodordev          #+#    #+#             */
-/*   Updated: 2024/10/21 17:45:51 by dodordev         ###   ########.fr       */
+/*   Updated: 2024/10/25 13:25:40 by dodordev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_shell.h"
 
-void	ft_echo(char **args)
+int	ft_echo(char **args)
 {
 	int	i;
 	int	newline;
@@ -30,6 +30,10 @@ void	ft_echo(char **args)
 		newline = 0;
 		i++;
 	}
+	/*
+	if the arg is -na or -nn you will print -na or -nn
+	 in the while loop and print the new line
+	*/
 	while (args[i])
 	{
 		ft_putstr_fd(args[i], STDOUT_FILENO);
@@ -39,4 +43,5 @@ void	ft_echo(char **args)
 	}
 	if (newline)
 		ft_putstr_fd("\n", STDOUT_FILENO);
+	return (EXIT_SUCCESS);
 }

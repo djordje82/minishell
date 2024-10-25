@@ -6,7 +6,7 @@
 /*   By: dodordev <dodordev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 11:45:14 by dodordev          #+#    #+#             */
-/*   Updated: 2024/10/24 13:16:53 by dodordev         ###   ########.fr       */
+/*   Updated: 2024/10/25 13:37:12 by dodordev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,9 @@ void	ft_exit(char **args);
 
 /*ERROR HANDLIN AND FREEING*/
 int		exit_error(char *err_msg, char *src, int err_code, t_shell *shell);
+int		minishell_clean(t_shell *shell, int exit_code);
+void	minishell_reset(t_shell *shell);
+void	print_syntax_error(const char *msg);
 
 /*UTILS*/
 int		count_args(char **args);

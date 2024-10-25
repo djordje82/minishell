@@ -6,7 +6,7 @@
 /*   By: dodordev <dodordev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 15:07:41 by dodordev          #+#    #+#             */
-/*   Updated: 2024/10/24 13:04:38 by dodordev         ###   ########.fr       */
+/*   Updated: 2024/10/25 14:16:18 by dodordev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,10 @@ int	exit_error(char *err_msg, char *src, int err_code, t_shell *shell)
 	}
 	rl_clear_history();
 	exit(err_code);
+}
+
+void	print_syntax_error(const char *msg)
+{
+	ft_putendl_fd("minishell: syntax error: unmatched ", STDERR_FILENO);
+	ft_putendl_fd(msg, STDERR_FILENO);
 }

@@ -1,21 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dodordev <dodordev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/27 14:31:16 by dodordev          #+#    #+#             */
-/*   Updated: 2024/10/25 13:49:41 by dodordev         ###   ########.fr       */
+/*   Created: 2024/10/25 14:16:40 by dodordev          #+#    #+#             */
+/*   Updated: 2024/10/25 14:16:57 by dodordev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "mini_shell.h"
 
-void	ft_lstdelone(t_list *lst, void (*del)(void *))
-{
-	if (!lst)
-		return ;
-	del(lst->content);
-	free(lst);
-}
