@@ -1,41 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_close_fd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dodordev <dodordev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/17 17:57:08 by dodordev          #+#    #+#             */
-/*   Updated: 2024/10/24 12:33:28 by dodordev         ###   ########.fr       */
+/*   Created: 2024/10/24 12:59:56 by dodordev          #+#    #+#             */
+/*   Updated: 2024/10/24 13:00:28 by dodordev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini_shell.h"
+#include "libft.h"
 
-int	count_args(char **args)
+void	ft_close_fd(int fd)
 {
-	int	i;
-
-	if (!args || !*args)
-		return (EXIT_FAILURE);
-	i = -1;
-	while (args[++i])
-		;
-	return (i);
-}
-
-int	is_numeric(const char *str)
-{
-	int	i;
-
-	i = 0;
-	if (str[i] == '-' || str[i] == '+')
-		i++;
-	while (str[i])
+	if (fd >= 0)
 	{
-		if (!ft_isdigit(str[i]))
-			return (0);
-		i++;
+		close(fd);
+		fd = -1;
 	}
-	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: dodordev <dodordev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 11:45:14 by dodordev          #+#    #+#             */
-/*   Updated: 2024/10/21 16:55:28 by dodordev         ###   ########.fr       */
+/*   Updated: 2024/10/24 13:16:53 by dodordev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define PROMPT "minishell> "
 # define SPECIAL "<>|;"
 
+/*ERROR CODES*/
 # define EXIT_SUCCESS 0
 # define EXIT_FAILURE 1
 # define EXIT_ERROR 2
@@ -51,6 +52,12 @@
 # define EXIT_SIGNAL 140
 # define EXIT_UNEXPECTED 141
 # define EXIT_NOT_IMPLEMENTED 142
+
+/*ERROR MESSAGES*/
+# define ERR_MAL "Memory allocation error"
+
+/*GLOBAL VARIABLE*/
+extern int	g_sig;
 
 /*STRUCTS*/
 typedef struct s_command
@@ -78,6 +85,10 @@ void	ft_unset(char **args);
 void	ft_env(void);
 void	ft_exit(char **args);
 
+/*ERROR HANDLIN AND FREEING*/
+int		exit_error(char *err_msg, char *src, int err_code, t_shell *shell);
+
 /*UTILS*/
 int		count_args(char **args);
+int		is_numeric(const char *str);
 #endif

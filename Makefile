@@ -6,14 +6,27 @@
 #    By: dodordev <dodordev@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/05 14:34:50 by j                 #+#    #+#              #
-#    Updated: 2024/10/21 13:05:14 by dodordev         ###   ########.fr        #
+#    Updated: 2024/10/24 12:20:20 by dodordev         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 NAME = minishell
 
-SRCS = src/main.c src/tokenizer.c src/exec.c src/check_find_path.c src/builtins/builtins.c src/utils.c src/parse.c src/redirections.c src/signals.c src/builtins/ft_echo.c src/builtins/ft_cd.c src/builtins/ft_pwd.c src/builtins/ft_export.c src/builtins/ft_unset.c src/builtins/ft_env.c src/builtins/ft_exit.c
+SRCS =	src/main.c \
+		src/builtins/cd.c \
+		src/builtins/echo.c \
+		src/builtins/env.c \
+		src/builtins/exit.c \
+		src/builtins/export.c \
+		src/builtins/pwd.c \
+		src/builtins/unset.c \
+		src/env/.c \
+		src/error/.c \
+		src/executor/.c \
+		src/parser/.c \
+		src/signals/.c \
+		src/utils/utils.c \
 OBJS = $(SRCS:.c=.o)
 
 CFLAGS = -Wall -Wextra -Werror -g -I./include

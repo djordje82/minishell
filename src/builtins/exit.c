@@ -6,34 +6,33 @@
 /*   By: dodordev <dodordev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 11:54:29 by dodordev          #+#    #+#             */
-/*   Updated: 2024/10/21 15:37:39 by dodordev         ###   ########.fr       */
+/*   Updated: 2024/10/24 15:38:19 by dodordev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_shell.h"
 
-void	ft_exit(char **args)
+void	ft_exit(char **args, t_shell *shell)
 {
-	int	i;
+	int	exit_code;
 
-	i = 1;
-	if (args[1])
+	if (count_args(args) > 2)
 	{
-		if (ft_isdigit(args[1][0]) == 0)
-		{
-			ft_putstr_fd("minishell: exit:", STDERR_FILENO);
-			ft_putstr_fd(args[1], STDERR_FILENO);
-			ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
-			exit(255);
-		}
-		else if (args[2])
-		{
-			ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
-			exit(1);
-		}
-		else
-			exit(ft_atoi(args[1]));
+		ft_putstr_fd("exit\n", STDERR_FILENO);
+		exit_error("", NULL, 1, shell);
 	}
+	if (args[1] && !is_numeric(args[1]))
+	{
+		ft_putstr_fd("exit\n", STDERR_FILENO);
+		exit_error("", args[1], 255, shell);
+	}
+	if (args[1])
+		exit_code = (ft_atoi(args[1]) % 256); //ft_atol instead of ft_atoi to handle owerflow
 	else
-		exit(0);
+	{
+		exit_code = 0;
+	}
+	ft_putstr_fd("exit\n", STDOUT_FILENO);
+	shell->exit_status = exit_code;
+	exit(exit_code);
 }

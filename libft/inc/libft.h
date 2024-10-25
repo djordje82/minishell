@@ -6,7 +6,7 @@
 /*   By: dodordev <dodordev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 16:29:37 by dodordev          #+#    #+#             */
-/*   Updated: 2024/10/21 15:14:52 by dodordev         ###   ########.fr       */
+/*   Updated: 2024/10/24 13:21:50 by dodordev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,17 @@ char	**ft_split(char const *s, char c);
 char	*ft_itoa(int n);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
+void	free_array(void **array, int len);
 
 /* ************************************************************************** */
-/*                                  PRINT                                     */
+/*                                  FD                                       */
 /* ************************************************************************** */
 
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
+void	ft_close_fd(int fd);
 
 /* ************************************************************************** */
 /*                                 STRUCT                                     */

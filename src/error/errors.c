@@ -6,43 +6,34 @@
 /*   By: dodordev <dodordev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 15:07:41 by dodordev          #+#    #+#             */
-/*   Updated: 2024/10/17 16:16:41 by dodordev         ###   ########.fr       */
+/*   Updated: 2024/10/24 13:04:38 by dodordev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_shell.h"
 
-void	ft_close(int fd)
+void	free_shell(t_shell *shell)
 {
-	if (fd >= 0)
+	if (shell->pid)
 	{
-		close(fd);
-		fd = -1;
+		free(shell->pid);
+		shell->pid = NULL;
+	}
+	if (shell->pipe)
+	{
+		free_array((void **)shell->pipe, shell->n_cmnds + 1);
+		shell->pipe = NULL;
 	}
 }
 
-void	free_meta(t_meta *meta)
+static void	free_envp(t_shell *shell)
 {
-	if (meta->pid)
-	{
-		free(meta->pid);
-		meta->pid = NULL;
-	}
-	if (meta->pipe)
-	{
-		free_array((void **)meta->pipe, meta->n_cmnds + 1);
-		meta->pipe = NULL;
-	}
+	if (shell->envp)
+		free_array((void **)shell->envp, -1);
+	shell->envp = NULL;
 }
 
-static void	free_envp(t_meta *meta)
-{
-	if (meta->envp)
-		free_array((void **)meta->envp, -1);
-	meta->envp = NULL;
-}
-
-int	exit_error(char *err_msg, char *src, int err_code, t_meta *meta)
+int	exit_error(char *err_msg, char *src, int err_code, t_shell *shell)
 {
 	char	*result;
 
@@ -51,7 +42,7 @@ int	exit_error(char *err_msg, char *src, int err_code, t_meta *meta)
 		result = ft_strjoin(src, err_msg);
 		if (!result)
 		{
-			ft_putendl_fd(ERR_MEM, STDERR_FILENO);
+			ft_putendl_fd(ERR_MAL, STDERR_FILENO);
 			exit(-1);
 		}
 		ft_putendl_fd(result, STDERR_FILENO);
@@ -59,12 +50,13 @@ int	exit_error(char *err_msg, char *src, int err_code, t_meta *meta)
 	}
 	else if (err_msg)
 		ft_putendl_fd(err_msg, STDERR_FILENO);
-	if (meta)
+	if (shell)
 	{
-		free_list(meta->cmnd_lst);
-		free_meta(meta);
-		free_envp(meta);
-		meta->exit_code = err_code;
+		free_list(shell->commands);
+        //free(shell);
+        //free(shell->envp);
+        //free_commands(shell->commands);
+        shell->exit_status = err_code;
 	}
 	rl_clear_history();
 	exit(err_code);
