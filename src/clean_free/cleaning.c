@@ -6,7 +6,7 @@
 /*   By: dodordev <dodordev@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:08:30 by jadyar            #+#    #+#             */
-/*   Updated: 2024/10/25 14:16:00 by dodordev         ###   ########.fr       */
+/*   Updated: 2024/10/30 11:28:37 by dodordev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	minishell_reset(t_shell *shell)
 	}
 	if (shell->tokens)
 	{
-		ft_lstclear(&shell->tokens);
+		ft_lstclear(&shell->tokens, NULL);
 		free(shell->tokens);
 		shell->tokens = NULL;
 	}
@@ -34,12 +34,12 @@ int	minishell_clean(t_shell *shell, int exit_code)
 		minishell_free_token(shell->input);
 	if (shell->tokens)
 	{
-		ft_lstclear(&shell->tokens);
+		ft_lstclear(&shell->tokens, NULL);
 	}
 	if (shell->env)
 	{
 		minishell_free_env(shell->env);
-		ft_lstclear(&shell->env);
+		ft_lstclear(&shell->env, NULL);
 	}
 	return (exit_code);
 }
